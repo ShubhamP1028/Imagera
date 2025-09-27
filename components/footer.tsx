@@ -47,7 +47,7 @@ export function Footer() {
         <div className="grid md:grid-cols-3 gap-8 mb-6">
           {/* About */}
           <div className="space-y-3">
-            <h3 className="font-semibold text-sm">NanoPreserve Editor</h3>
+            <h3 className="font-semibold text-sm">Nano Editor for Newbies</h3>
             <p className="text-xs text-muted-foreground leading-relaxed">
               AI-powered image editing that preserves facial identity while enabling creative transformations. Built
               with cutting-edge face detection and preservation technology.
@@ -112,9 +112,9 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="flex flex-col md:flex-row items-center justify-between pt-6 border-t border-border text-xs text-muted-foreground">
           <div className="flex items-center space-x-4 mb-2 md:mb-0">
-            <span>© 2025 NanoPreserve Editor</span>
+            <span>© Author - Shubham Pandey</span>
             <span>•</span>
-            <span>Built with React, Next.js, and Gemini AI</span>
+            <span>Built with Gemini Flask 2.5 Image</span>
           </div>
 
           <div className="flex items-center space-x-4">

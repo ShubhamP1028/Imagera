@@ -68,11 +68,11 @@ export function Header() {
         <div className="flex items-center space-x-4">
           <div className="flex items-center space-x-2 cursor-pointer" onClick={() => router.push("/")}>
             <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">NP</span>
+              <img src="/logo.png" alt="Logo" className="w-10 rounded-[10px]"/>
             </div>
             <div>
-              <h1 className="text-xl font-bold text-foreground">NanoPreserve Editor</h1>
-              <p className="text-xs text-muted-foreground hidden sm:block">AI-Powered Image Editing</p>
+              <h1 className="text-xl font-bold text-foreground">Nano Newbie</h1>
+              <p className="text-xs text-muted-foreground hidden sm:block">Gemini Powered  Editing Tool</p>
             </div>
           </div>
 
