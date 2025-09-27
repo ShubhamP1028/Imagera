@@ -3,9 +3,9 @@
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { ThemeProvider } from "@/components/theme-provider"
-import { ModeSelector } from "@/components/mode-selector"
+import { BackgroundReplaceEditor } from "@/components/background-replace-editor"
 
-export default function HomePage() {
+export default function BackgroundReplacePage() {
   return (
     <ThemeProvider>
       <div className="min-h-screen bg-background text-foreground">
@@ -13,7 +13,7 @@ export default function HomePage() {
           <Header />
 
           <main className="flex-1 container mx-auto px-4 py-8 max-w-7xl">
-            <ModeSelector />
+            <BackgroundReplaceEditor />
           </main>
 
           <Footer />

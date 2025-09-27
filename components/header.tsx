@@ -1,16 +1,50 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter, usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 import { useTheme } from "./theme-provider"
-import { HelpCircle, Settings, Info, Moon, Sun, Github, ExternalLink } from "lucide-react"
+import {
+  HelpCircle,
+  Settings,
+  Info,
+  Moon,
+  Sun,
+  Github,
+  ExternalLink,
+  ChevronDown,
+  Users,
+  Wand2,
+  Palette,
+  ImageIcon,
+  Sparkles,
+  Camera,
+} from "lucide-react"
+
+const editingModes = [
+  { id: "face-swap", name: "Face Swap", icon: Users, route: "/face-swap" },
+  { id: "create", name: "Create with Prompts", icon: Wand2, route: "/create" },
+  { id: "style-transfer", name: "Style Transfer", icon: Palette, route: "/style-transfer" },
+  { id: "background-replace", name: "Background Replace", icon: ImageIcon, route: "/background-replace" },
+  { id: "enhance", name: "AI Enhancement", icon: Sparkles, route: "/enhance" },
+  { id: "try-on", name: "Virtual Try-On", icon: Camera, route: "/try-on" },
+]
 
 export function Header() {
   const { theme, setTheme } = useTheme()
+  const router = useRouter()
+  const pathname = usePathname()
   const [apiKey, setApiKey] = useState("")
   const [showHelp, setShowHelp] = useState(false)
   const [showSettings, setShowSettings] = useState(false)
@@ -24,12 +58,15 @@ export function Header() {
     "Use specific descriptions for better results",
   ]
 
+  const currentMode = editingModes.find((mode) => mode.route === pathname)
+  const isHomePage = pathname === "/"
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between max-w-7xl">
         {/* Logo and Title */}
         <div className="flex items-center space-x-4">
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 cursor-pointer" onClick={() => router.push("/")}>
             <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-sm">NP</span>
             </div>
@@ -38,12 +75,54 @@ export function Header() {
               <p className="text-xs text-muted-foreground hidden sm:block">AI-Powered Image Editing</p>
             </div>
           </div>
+
+          {/* Mode Selector Dropdown */}
+          {!isHomePage && (
+            <div className="hidden md:block">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" className="flex items-center gap-2 bg-transparent">
+                    {currentMode && (
+                      <>
+                        <currentMode.icon className="h-4 w-4" />
+                        {currentMode.name}
+                      </>
+                    )}
+                    <ChevronDown className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-56">
+                  <DropdownMenuItem onClick={() => router.push("/")}>
+                    <div className="flex items-center gap-2">
+                      <div className="w-4 h-4 bg-gradient-to-br from-blue-500 to-purple-600 rounded-sm" />
+                      <span>All Modes</span>
+                    </div>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  {editingModes.map((mode) => (
+                    <DropdownMenuItem
+                      key={mode.id}
+                      onClick={() => router.push(mode.route)}
+                      className={pathname === mode.route ? "bg-accent" : ""}
+                    >
+                      <div className="flex items-center gap-2">
+                        <mode.icon className="h-4 w-4" />
+                        <span>{mode.name}</span>
+                      </div>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          )}
         </div>
 
         {/* Subtitle - Hidden on mobile */}
         <div className="hidden lg:block text-center">
           <p className="text-sm text-muted-foreground">
-            Edit photos while preserving faces & identity. Powered by Gemini Nano.
+            {isHomePage
+              ? "Edit photos while preserving faces & identity. Powered by Gemini Nano."
+              : currentMode?.name && `${currentMode.name} - Preserve identity while transforming images`}
           </p>
         </div>
 
